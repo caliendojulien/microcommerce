@@ -1,6 +1,7 @@
 package fr.ecommerce.microcommerce.web.controller;
 
 import fr.ecommerce.microcommerce.dto.ProductDto;
+import fr.ecommerce.microcommerce.exception.NotFoundException;
 import fr.ecommerce.microcommerce.service.ProductService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,8 @@ public class ProductControler {
 
     @GetMapping("/products/{id}")
     public ProductDto one(@PathVariable int id) {
-        return productService.one(id);
+        ProductDto productDto = productService.one(id);
+        if (productDto == null) throw new NotFoundException("Aucun produit trouvé");
+        return productDto;
     }
 }
